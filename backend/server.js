@@ -27,9 +27,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Connect to MongoDB
-connectDB();
-
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', noteRoutes);
@@ -44,6 +41,18 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  logger.info(`✅ Server running on http://localhost:${PORT}`);
-});
+
+// Start server after connecting to MongoDB
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      logger.info(`✅ Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    logger.error('❌ Failed to start server:', error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
