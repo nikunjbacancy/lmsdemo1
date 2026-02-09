@@ -1,0 +1,272 @@
+.note-item {
+  list-style: none;
+  margin-bottom: 0;
+  transition: all 0.3s ease;
+  cursor: grab;
+  display: flex;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+  align-items: center;
+}
+
+.note-item:last-child {
+  border-bottom: none;
+}
+
+.note-item:active {
+  cursor: grabbing;
+}
+
+.note-item.dragging {
+  opacity: 0.5;
+}
+
+.note-item.dragging .drag-handle {
+  transform: scale(1.1);
+  color: #667eea;
+}
+
+.note-item.deleting {
+  animation: deleteSlide 0.4s ease forwards;
+}
+
+@keyframes deleteSlide {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.drag-handle {
+  flex-shrink: 0;
+  font-size: 1.2em;
+  color: #cbd5e1;
+  cursor: grab;
+  user-select: none;
+  transition: all 0.2s ease;
+  order: 1;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+  color: #94a3b8;
+}
+
+.note-item:hover .drag-handle {
+  color: #94a3b8;
+}
+
+.note-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  order: 3;
+}
+
+.note-text-wrapper {
+  flex: 1;
+  min-width: 0;
+}
+
+.note-text {
+  word-wrap: break-word;
+  word-break: break-word;
+  line-height: 1.5;
+  color: #334155;
+  font-size: 0.95rem;
+  overflow-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-text.blurred {
+  filter: blur(5px);
+  user-select: none;
+  color: #cbd5e1;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-text.blurred::before {
+  content: "🔒 ";
+  filter: none;
+}
+
+.note-image-container {
+  flex-shrink: 0;
+  order: 2;
+}
+
+.note-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.note-image:hover {
+  transform: scale(1.08);
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.note-image-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  background-color: #e8eef7;
+  border: 1px solid #d1dce6;
+  flex-shrink: 0;
+}
+
+.note-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  order: 4;
+}
+
+.note-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.tag-general { background-color: #dbeafe; color: #0c4a6e; }
+.tag-gym { background-color: #f3e8ff; color: #5b21b6; }
+.tag-food { background-color: #fed7aa; color: #7c2d12; }
+.tag-bills { background-color: #fee2e2; color: #7f1d1d; }
+.tag-work { background-color: #dcfce7; color: #15803d; }
+.tag-shopping { background-color: #fbcfe8; color: #9d174d; }
+.tag-personal { background-color: #ccfbf1; color: #134e4a; }
+.tag-private { background-color: #fce7f3; color: #831843; }
+
+.note-actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.note-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  color: #64748b;
+}
+
+.note-item:hover .note-actions button {
+  opacity: 1;
+}
+
+.note-actions button:hover {
+  background-color: #f1f5f9;
+}
+
+.eye-btn {
+  color: #64748b;
+}
+
+.eye-btn:hover {
+  color: #475569;
+}
+
+.edit-btn {
+  color: #3b82f6;
+}
+
+.edit-btn:hover {
+  color: #1d4ed8;
+}
+
+.delete-btn {
+  color: #ef4444;
+}
+
+.delete-btn:hover {
+  color: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .note-item {
+    padding: 12px 0;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .drag-handle {
+    font-size: 1em;
+  }
+
+  .note-main {
+    order: 2;
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  .note-footer {
+    order: 3;
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  .note-text {
+    font-size: 0.9rem;
+  }
+
+  .note-tag {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+
+  .note-image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .note-actions button {
+    font-size: 1em;
+    padding: 3px 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .note-item {
+    padding: 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .drag-handle {
+    display: none;
+  }
+
+  .note-actions {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}

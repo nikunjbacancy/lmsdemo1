@@ -1,0 +1,139 @@
+.notes-list {
+  margin-top: 30px;
+}
+
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.notes-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.8em;
+}
+
+.search-container {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+  min-width: 250px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1em;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  color: #999;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.clear-search-btn:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.filters-section {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 10px 18px;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  background-color: #f5f5f5;
+  color: #666;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9em;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.filter-general.active { background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%); }
+.filter-gym.active { background: linear-gradient(135deg, #7b1fa2 0%, #6a1b9a 100%); }
+.filter-food.active { background: linear-gradient(135deg, #e65100 0%, #d84315 100%); }
+.filter-bills.active { background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%); }
+.filter-work.active { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); }
+.filter-shopping.active { background: linear-gradient(135deg, #c2185b 0%, #ad1457 100%); }
+.filter-personal.active { background: linear-gradient(135deg, #00695c 0%, #004d40 100%); }
+.filter-private.active { background: linear-gradient(135deg, #4e342e 0%, #3e2723 100%); }
+
+.notes-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.empty-state {
+  text-align: center;
+  color: #999;
+  font-size: 1.2em;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+  .notes-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-container {
+    max-width: none;
+    min-width: auto;
+  }
+
+  .filters-section {
+    gap: 8px;
+  }
+
+  .filter-btn {
+    font-size: 0.85em;
+    padding: 8px 14px;
+  }
+}
