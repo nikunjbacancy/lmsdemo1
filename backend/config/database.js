@@ -6,6 +6,9 @@ const logger = require('../utils/logger');
  */
 const connectDB = async () => {
   try {
+    console.log('📡 Attempting to connect to MongoDB...');
+    console.log('URI:', process.env.MONGODB_URI ? 'Set' : 'NOT SET');
+    
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
       // These options are now default in Mongoose 6+
       // but included for clarity and backwards compatibility
@@ -14,7 +17,8 @@ const connectDB = async () => {
     logger.info(`✅ MongoDB connected successfully: ${conn.connection.host}`);
   } catch (error) {
     logger.error('❌ MongoDB connection error:', error.message);
-    process.exit(1);
+    console.error('❌ Connection error details:', error);
+    throw error;
   }
 };
 
