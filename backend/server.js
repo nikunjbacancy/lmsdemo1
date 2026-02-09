@@ -31,8 +31,8 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 // API Routes
-app.use('/', authRoutes);
-app.use('/notes', noteRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/notes', noteRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
