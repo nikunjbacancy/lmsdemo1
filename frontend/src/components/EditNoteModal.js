@@ -1,8 +1,9 @@
 import { AVAILABLE_TAGS } from '../constants';
 import RichTextEditor from './RichTextEditor';
 import './EditNoteModal.css';
-
+const API_URL = process.env.REACT_APP_API_URL;
 const EditNoteModal = ({ note, onSave, onCancel, editText, setEditText, editTag, setEditTag }) => {
+
   const handleSave = () => {
     if (editText.trim()) {
       onSave();
@@ -23,7 +24,7 @@ const EditNoteModal = ({ note, onSave, onCancel, editText, setEditText, editTag,
           {note.hasImage && (
             <div className="modal-image-container">
               <img
-                src={`http://localhost:5000/notes/${note.id}/image`}
+                src={`${API_URL}/notes/${note.id}/image`}
                 alt="Note"
                 className="modal-image"
               />

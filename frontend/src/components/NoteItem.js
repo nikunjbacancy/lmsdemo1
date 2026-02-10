@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { STRINGS, DEFAULT_TAG } from '../constants';
 import './NoteItem.css';
-
+const API_URL = process.env.REACT_APP_API_URL;
 const NoteItem = ({ 
   note, 
   index,
@@ -16,6 +16,7 @@ const NoteItem = ({
   onImageView
 }) => {
   const [isPrivateVisible, setIsPrivateVisible] = useState(false);
+  
 
   const isPrivate = note.tag === 'Private';
   const displayText = isPrivate && !isPrivateVisible 
@@ -44,7 +45,7 @@ const NoteItem = ({
       <div className="note-image-container">
         {note.hasImage ? (
           <img 
-            src={`http://localhost:5000/notes/${note.id}/image`}
+            src={`${API_URL}/notes/${note.id}/image`}
             alt="Note attachment"
             className="note-image"
             onClick={() => onImageView(note.id)}

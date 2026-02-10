@@ -1,6 +1,7 @@
 import './ImageViewer.css';
-
+const API_URL = process.env.REACT_APP_API_URL;
 const ImageViewer = ({ noteId, onClose }) => {
+  
   return (
     <div className="image-viewer-overlay" onClick={onClose}>
       <div className="image-viewer-container" onClick={(e) => e.stopPropagation()}>
@@ -8,7 +9,7 @@ const ImageViewer = ({ noteId, onClose }) => {
           ✕
         </button>
         <img
-          src={`http://localhost:5000/notes/${noteId}/image`}
+          src={`${API_URL}/notes/${noteId}/image`}
           alt="Note"
           className="image-viewer-img"
         />
