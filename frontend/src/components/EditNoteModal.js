@@ -24,7 +24,7 @@ const EditNoteModal = ({ note, onSave, onCancel, editText, setEditText, editTag,
           {note.hasImage && (
             <div className="modal-image-container">
               <img
-                src={`${API_URL}/notes/${note.id}/image`}
+                src={`${API_URL}/api/notes/${note.id}/image`}
                 alt="Note"
                 className="modal-image"
               />

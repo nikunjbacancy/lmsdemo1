@@ -45,7 +45,7 @@ const NoteItem = ({
       <div className="note-image-container">
         {note.hasImage ? (
           <img 
-            src={`${API_URL}/notes/${note.id}/image`}
+            src={`${API_URL}/api/notes/${note.id}/image`}
             alt="Note attachment"
             className="note-image"
             onClick={() => onImageView(note.id)}

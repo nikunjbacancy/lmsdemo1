@@ -9,7 +9,7 @@ const ImageViewer = ({ noteId, onClose }) => {
           ✕
         </button>
         <img
-          src={`${API_URL}/notes/${noteId}/image`}
+          src={`${API_URL}/api/notes/${noteId}/image`}
           alt="Note"
           className="image-viewer-img"
         />
