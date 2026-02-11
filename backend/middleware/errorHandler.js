@@ -6,6 +6,17 @@ const logger = require('../utils/logger');
 const errorHandler = (err, req, res, next) => {
   logger.error('Error:', err);
 
+  // CORS blocked (from cors origin callback)
+  if (err && err.message === 'Not allowed by CORS') {
+    const origin = req.headers.origin || '(no origin header)';
+    logger.warn(`CORS rejection for origin=${origin} path=${req.originalUrl}`);
+    return res.status(403).json({
+      success: false,
+      message: 'CORS blocked: origin not allowed',
+      origin
+    });
+  }
+
   // Mongoose validation error
   if (err.name === 'ValidationError') {
     const messages = Object.values(err.errors).map(e => e.message);

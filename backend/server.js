@@ -22,26 +22,73 @@ app.use(morgan(':method :url :status :response-time ms - :body', {
   }
 }));
 
+// Extra request context logs (helps debug CORS / preflight in Render logs)
+app.use((req, res, next) => {
+  if (req.url === '/health') return next();
+
+  const origin = req.headers.origin || '(no origin header)';
+  const host = req.headers.host || '(no host header)';
+  const ua = req.headers['user-agent'] || '(no user-agent)';
+
+  if (req.method === 'OPTIONS') {
+    logger.info(
+      `[CORS:preflight] ${req.method} ${req.originalUrl} origin=${origin} host=${host} ` +
+      `acr-method=${req.headers['access-control-request-method'] || '(none)'} ` +
+      `acr-headers=${req.headers['access-control-request-headers'] || '(none)'} ua="${ua}"`
+    );
+  } else {
+    logger.info(
+      `[REQ] ${req.method} ${req.originalUrl} origin=${origin} host=${host} ua="${ua}"`
+    );
+  }
+
+  next();
+});
+
 /* =================================
-   ✅ FIXED CORS CONFIGURATION
+   ✅ CORS CONFIGURATION
    ================================= */
 
-const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:5000',
-    'https://lms-frontend-dzgb.onrender.com',
-    'https://lms-backend-tddw.onrender.com'
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+// Allowed origins
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5000',
+  'https://lms-frontend-dzgb.onrender.com',
+  'https://lms-backend-tddw.onrender.com'
+];
 
-// ✅ Explicitly handle preflight requests
-app.options('*', cors(corsOptions));
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in allowed list
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      logger.info(`CORS allowed origin: ${origin}`);
+      callback(null, true);
+    } else {
+      // Log for debugging
+      logger.warn(`CORS blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'Accept',
+    'Origin'
+  ],
+  // Expose useful headers (optional)
+  exposedHeaders: ['Content-Length'],
+  optionsSuccessStatus: 200,
+  preflightContinue: false
+};
+
+// Apply CORS middleware before other middleware
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());

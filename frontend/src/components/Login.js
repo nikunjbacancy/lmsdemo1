@@ -17,22 +17,34 @@ const Login = () => {
     setError('');
     setLoading(true);
 
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`📋 [Login Component] Form submitted - Mode: ${isRegistering ? 'REGISTER' : 'LOGIN'}`);
+    console.log('👤 Username:', username);
+    console.log('🔒 Password length:', password.length);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
     try {
       const result = isRegistering 
         ? await register(username, password)
         : await login(username, password);
 
+      console.log('📊 [Login Component] Result:', result);
+
       if (!result.success) {
+        console.warn('⚠️ [Login Component] Operation failed:', result.message);
         setError(result.message);
       } else {
+        console.log('✅ [Login Component] Operation successful, clearing form');
         // Clear form on success
         setUsername('');
         setPassword('');
       }
     } catch (err) {
+      console.error('❌ [Login Component] Exception caught:', err);
       setError(isRegistering ? 'Registration failed. Please try again.' : 'Login failed. Please try again.');
     } finally {
       setLoading(false);
+      console.log('🏁 [Login Component] Form submission completed');
     }
   };
 
