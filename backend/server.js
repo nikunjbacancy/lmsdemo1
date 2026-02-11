@@ -30,7 +30,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5000',
   'https://lms-frontend-dzgb.onrender.com',
-  'https://lms-backend-tddw.onrender.com'
+  'https://lms-backend-tddw.onrender.com',
+  '*'
 ];
 
 const corsOptions = {
