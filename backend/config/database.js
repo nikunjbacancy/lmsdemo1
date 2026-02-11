@@ -13,7 +13,8 @@ const connectDB = async () => {
       // These options are now default in Mongoose 6+
       // but included for clarity and backwards compatibility
     });
-    
+
+    console.log(`✅ MongoDB connected successfully: ${conn.connection.host}`);
     logger.info(`✅ MongoDB connected successfully: ${conn.connection.host}`);
   } catch (error) {
     logger.error('❌ MongoDB connection error:', error.message);
