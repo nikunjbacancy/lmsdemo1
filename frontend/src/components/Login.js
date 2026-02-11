@@ -120,12 +120,6 @@ const Login = () => {
                 : 'Need an account? Register'}
             </button>
           </div>
-
-          {!isRegistering && (
-            <div className="demo-credentials">
-              <p>Note: Demo accounts have been removed. Please register a new account.</p>
-            </div>
-          )}
         </form>
       </div>
     </div>
