@@ -55,6 +55,21 @@ app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Welcome endpoint
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: '✅ LifeNotes Backend is running successfully!',
+    version: '1.0.0',
+    endpoints: {
+      auth: '/api/auth/login and /api/auth/register',
+      notes: '/api/notes',
+      health: '/health'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', noteRoutes);
