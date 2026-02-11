@@ -26,27 +26,18 @@ app.use(morgan(':method :url :status :response-time ms - :body', {
    ✅ FIXED CORS CONFIGURATION
    ================================= */
 
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:5000',
-  'https://lms-frontend-dzgb.onrender.com',
-  'https://lms-backend-tddw.onrender.com',
-  '*'
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:5000',
+    'https://lms-frontend-dzgb.onrender.com',
+    'https://lms-backend-tddw.onrender.com'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200
 };
-console.log('CORS Options:', corsOptions);
 app.use(cors(corsOptions));
 
 // ✅ Explicitly handle preflight requests
