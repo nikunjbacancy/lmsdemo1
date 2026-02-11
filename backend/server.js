@@ -46,7 +46,7 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
-
+console.log('CORS Options:', corsOptions);
 app.use(cors(corsOptions));
 
 // ✅ Explicitly handle preflight requests
