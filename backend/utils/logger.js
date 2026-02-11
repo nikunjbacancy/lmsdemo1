@@ -24,35 +24,33 @@ const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: logFormat,
   transports: [
+    // Always log to console (Render / Docker / PM2 rely on stdout)
+    new winston.transports.Console({
+      format: winston.format.combine(
+        process.env.NODE_ENV !== 'production' ? winston.format.colorize() : winston.format.uncolorize(),
+        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.printf(({ timestamp, level, message, stack }) => {
+          if (stack) {
+            return `${timestamp} ${level}: ${message}\n${stack}`;
+          }
+          return `${timestamp} ${level}: ${message}`;
+        })
+      )
+    }),
     // Write all logs with level 'error' and below to error.log
-    new winston.transports.File({ 
-      filename: path.join(__dirname, '../logs/error.log'), 
+    new winston.transports.File({
+      filename: path.join(__dirname, '../logs/error.log'),
       level: 'error',
       maxsize: 5242880, // 5MB
       maxFiles: 5
     }),
     // Write all logs with level 'info' and below to combined.log
-    new winston.transports.File({ 
+    new winston.transports.File({
       filename: path.join(__dirname, '../logs/combined.log'),
       maxsize: 5242880, // 5MB
       maxFiles: 5
     })
   ]
 });
-
-// If not in production, also log to console with colors
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.printf(({ timestamp, level, message, stack }) => {
-        if (stack) {
-          return `${timestamp} ${level}: ${message}\n${stack}`;
-        }
-        return `${timestamp} ${level}: ${message}`;
-      })
-    )
-  }));
-}
 
 module.exports = logger;
