@@ -50,12 +50,20 @@ app.use((req, res, next) => {
    ================================= */
 
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:5000',
-    'https://lms-frontend-dzgb.onrender.com',
-    'https://lms-backend-tddw.onrender.com'
-  ],
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:5000',
+      'https://lms-frontend-dzgb.onrender.com'
+    ];
+
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -103,15 +111,15 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(PORT, () => {
-      logger.info(`✅ Server running on http://localhost:${PORT}`);
-    });
   } catch (error) {
-    logger.error('❌ Failed to start server:', error.message);
-    logger.error('❌ Full error:', error);
-    console.error('Error details:', error);
-    process.exit(1);
+    logger.error('⚠️ MongoDB connection failed:', error.message);
+    console.error('⚠️ Will start server anyway for debugging. Database operations will fail.');
+    console.error('Error:', error.message);
   }
+  
+  app.listen(PORT, () => {
+    logger.info(`✅ Server running on http://localhost:${PORT}`);
+  });
 };
 
 startServer();

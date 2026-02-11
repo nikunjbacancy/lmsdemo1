@@ -28,13 +28,13 @@ const Login = () => {
         ? await register(username, password)
         : await login(username, password);
 
-      console.log('📊 [Login Component] Result:', result);
+      console.log('📊 [Login/Register Component] Result:', result);
 
       if (!result.success) {
-        console.warn('⚠️ [Login Component] Operation failed:', result.message);
+        console.warn('⚠️ [Login/Register Component] Operation failed:', result.message);
         setError(result.message);
       } else {
-        console.log('✅ [Login Component] Operation successful, clearing form');
+        console.log('✅ [Login/Register Component] Operation successful, clearing form');
         // Clear form on success
         setUsername('');
         setPassword('');
